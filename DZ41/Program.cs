@@ -3,60 +3,29 @@
 // 0, 7, 8, -2, -2 -> 2
 // -1, -7, 567, 89, 223-> 3
 
-Console.Write("Введите числа через запятую: ");
-int[] numbers = StringToNum(Console.ReadLine());
+Console.Write("Введите числа через пробел: ");
+
+double[] numbers = Array.ConvertAll(Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries), double.Parse);
+
+double StringNumSum(double[] numbers)
+{
+    int count = 0;
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        if (numbers[i] > 0) count += 1;
+    }
+    return count;
+}
+
 PrintArray(numbers);
-int sum = 0;
-for (int i = 0; i < numbers.Length; i++)
+
+void PrintArray(double[] array)
 {
-    if (numbers[i] > 0)
-    {
-        sum++;
-    }
-}
-Console.WriteLine($" -> чисел больше 0 введено -> {sum}");
-
-int[] StringToNum(string input)
-{
-    int count = 1;
-    for (int i = 0; i < input.Length; i++)
-    {
-        if (input[i] == ',')
-        {
-            count++;
-        }
-    }
-
-    int[] numbers = new int[count];
-    int index = 0;
-
-    for (int i = 0; i < input.Length; i++)
-    {
-        string temp = "";
-
-        while (input[i] != ',')
-        {
-            if (i != input.Length - 1)
-            {
-                temp += input[i].ToString();
-                i++;
-            }
-            else
-            {
-                temp += input[i].ToString();
-                break;
-            }
-        }
-        numbers[index] = Convert.ToInt32(temp);
-        index++;
-    }
-    return numbers;
-}
-
-void PrintArray(int[] array)
-{
+    Console.Write("Введены числа: ");
     for (int i = 0; i < array.Length; i++)
-        Console.Write($"{array[i]}, ");
-    Console.Write($"{array[array.Length - 1]}");
+    {
+        if (i < array.Length - 1) Console.Write($"{array[i]}, ");
+        else Console.Write($"{array[i]}");
+    }
 }
-
+Console.WriteLine($" -> чисел больше 0 -> {StringNumSum(numbers)}");
